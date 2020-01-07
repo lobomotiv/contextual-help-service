@@ -81,6 +81,7 @@ $app->singleton(
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(InsightsServiceProvider::class);
+$app->register(\Middleware\Auth\Jwt\Providers\LumenServiceProvider::class);
 
 /**
  * Load configurations

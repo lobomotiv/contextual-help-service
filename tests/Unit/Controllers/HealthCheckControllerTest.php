@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Controller;
+namespace Test\Unit\Controller;
 
 use Test\TestCase;
 
