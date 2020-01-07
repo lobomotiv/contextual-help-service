@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\User;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -15,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // register
     }
 
     /**
