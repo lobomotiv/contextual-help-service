@@ -69,8 +69,12 @@ test: ## Run tests (in docker)
 	@$(MAKE) up-test
 	@docker-compose exec web /bin/bash -l -c "./vendor/bin/phpunit"
 
+check: insights test ## Run insights and tests (in docker)
+
 test-native: ## Run tests
 	APP_ENV=testing ./vendor/bin/phpunit
+
+check-native: insights-native test-native ## Run insights and tests
 
 codestyle-check:
 	@composer check-style
