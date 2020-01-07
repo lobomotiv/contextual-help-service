@@ -1,0 +1,10 @@
+.editorconfig
+.env.example
+.gitignore
+.phpunit.results.cache
+.styleci.xml
+docker-compose.yml
+phpunit.xml
+/docker
+/tests
+/vendor
