@@ -17,3 +17,4 @@ $router->get('/', static function () use ($router) {
 });
 
 $router->get('/healthcheck', 'HealthCheckController@index');
+$router->get('/article/{id:[0-9]+}', 'ArticleController@index');
