@@ -80,8 +80,12 @@ $app->singleton(
 
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
-$app->register(InsightsServiceProvider::class);
+
 $app->register(\Middleware\Auth\Jwt\Providers\LumenServiceProvider::class);
+
+if (class_exists(InsightsServiceProvider::class)) {
+    $app->register(InsightsServiceProvider::class);
+}
 
 /**
  * Load configurations
