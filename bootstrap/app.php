@@ -87,6 +87,7 @@ $app->register(\Middleware\Auth\Jwt\Providers\LumenServiceProvider::class);
  * Load configurations
  */
 $app->configure('insights');
+$app->configure('logging');
 
 /*
 |--------------------------------------------------------------------------
