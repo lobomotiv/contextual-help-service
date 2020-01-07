@@ -2,6 +2,7 @@
 
 namespace Test\Unit\Controller;
 
+use Psr\Log\LogLevel;
 use Test\TestCase;
 
 class HealthCheckControllerTest extends TestCase
@@ -15,5 +16,16 @@ class HealthCheckControllerTest extends TestCase
 
         $this->assertResponseStatus(200);
         $this->seeJson(['success' => true]);
+    }
+
+    /**
+     * @test
+     */
+    public function index_EverythingIsFine_LogsHealthCheckWasCalled(): void
+    {
+        $mockLogger = $this->mockLogger();
+        $this->get('/healthcheck');
+
+        $mockLogger->assertLoggedMessage(LogLevel::INFO, 'healthcheck was called');
     }
 }
