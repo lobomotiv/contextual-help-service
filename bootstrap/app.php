@@ -1,5 +1,7 @@
 <?php
 
+use NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider;
+
 require_once __DIR__.'/../vendor/autoload.php';
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
@@ -78,7 +80,12 @@ $app->singleton(
 
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
+$app->register(InsightsServiceProvider::class);
+
+/**
+ * Load configurations
+ */
+$app->configure('insights');
 
 /*
 |--------------------------------------------------------------------------

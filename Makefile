@@ -11,6 +11,8 @@ install: ## Build images
 	@docker-compose build
 	@$(run_docker) composer install
 
+update: ## Update dependencies
+	@$(run_docker) composer update
 
 setup-local-env: ## Copy .env file and replace origin customer id
 	cp -p .env.example .env
@@ -65,7 +67,6 @@ stop-test: ## Stop test containers
 
 test: ## Run tests (in docker)
 	@$(MAKE) up-test
-	@$(MAKE) insights
 	@docker-compose exec web /bin/bash -l -c "./vendor/bin/phpunit"
 
 test-native: ## Run tests
