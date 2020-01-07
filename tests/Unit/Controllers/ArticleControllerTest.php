@@ -17,7 +17,7 @@ class ArticleControllerTest extends TestCase
 
         $expectedResponse = [
             'body' => '<h1>Dummy Response</h1>',
-            'url' => 'http://example.com',
+            'url' => 'http://example.com/123',
             'title' => 'Dummy Response',
         ];
 

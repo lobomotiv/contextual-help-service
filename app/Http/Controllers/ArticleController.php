@@ -10,7 +10,7 @@ class ArticleController extends Controller
     {
         return new JsonResponse([
             'body' => '<h1>Dummy Response</h1>',
-            'url' => 'http://example.com',
+            'url' => 'http://example.com/' . $id,
             'title' => 'Dummy Response',
         ]);
     }
