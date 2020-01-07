@@ -1,5 +1,8 @@
 <?php
 
+namespace Test\Controller;
+
+use Test\TestCase;
 
 class HealthCheckControllerTest extends TestCase
 {
