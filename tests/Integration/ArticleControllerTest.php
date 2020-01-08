@@ -31,7 +31,7 @@ class ArticleControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_calledWithRequiredPostParams_returns200(): void
+    public function index_calledWithRequiredGetParams_returns200(): void
     {
         $this->get('article/123', $this->generateValidJwtHeader());
         $this->assertResponseStatus(Response::HTTP_OK);
