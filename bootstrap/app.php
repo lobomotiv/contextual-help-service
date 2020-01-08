@@ -1,5 +1,7 @@
 <?php
 
+use Nord\Lumen\Cors\CorsMiddleware;
+use Nord\Lumen\Cors\CorsServiceProvider;
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider;
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -59,9 +61,9 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+ $app->middleware([
+     CorsMiddleware::class,
+ ]);
 
 // $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
@@ -81,6 +83,7 @@ $app->singleton(
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 
+$app->register(CorsServiceProvider::class);
 $app->register(\Middleware\Auth\Jwt\Providers\LumenServiceProvider::class);
 
 if (class_exists(InsightsServiceProvider::class)) {
@@ -90,6 +93,7 @@ if (class_exists(InsightsServiceProvider::class)) {
 /**
  * Load configurations
  */
+$app->configure('cors');
 $app->configure('insights');
 $app->configure('logging');
 
