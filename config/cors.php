@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'allow_origins' => ['*.ett.local', '*.s.emarsys.com', '*.emarsys.net'],
+    'allow_origins' => ['*'],
 
     /*
     |--------------------------------------------------------------------------
