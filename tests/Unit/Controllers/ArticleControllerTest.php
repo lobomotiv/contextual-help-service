@@ -41,22 +41,24 @@ class ArticleControllerTest extends TestCase
     public function index_calledWithExistingId_returnsArticleData(): void
     {
         $article = [
-            'body' => '<h1>Dummy Response</h1>',
+            'body' => '<script>alert("hello")</script><h1>Dummy Response</h1>',
             'html_url' => 'http://example.com/',
             'title' => 'Dummy Response',
         ];
         $expectedResponseBody = [
-            'body' => $article['body'],
+            'body' => '<h1>Dummy Response</h1>',
             'url' => $article['html_url'],
             'title' => $article['title'],
         ];
+
+        $purifier = $this->app->get(HTMLPurifier::class);
         $zendeskClientMock = $this->createMock(ZendeskClient::class);
         $zendeskClientMock
             ->expects($this->once())
             ->method('getArticleById')
             ->with(self::ARTICLE_ID)
             ->willReturn($article);
-        $controller = new ArticleController($zendeskClientMock);
+        $controller = new ArticleController($purifier, $zendeskClientMock);
 
         $response = $controller->index(self::ARTICLE_ID);
 
