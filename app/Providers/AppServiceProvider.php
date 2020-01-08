@@ -13,6 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // register
+        $this->app->singleton(\HTMLPurifier::class, static function () {
+            $config = \HTMLPurifier_Config::createDefault();
+
+            return new \HTMLPurifier($config);
+        });
     }
 }

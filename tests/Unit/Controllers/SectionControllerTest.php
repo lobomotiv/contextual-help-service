@@ -12,7 +12,8 @@ class SectionControllerTest extends TestCase
      */
     public function index_calledWithId_returnsDummySection()
     {
-        $controller = new SectionController();
+        $purifier = app(\HTMLPurifier::class);
+        $controller = new SectionController($purifier);
         $response = $controller->index(123, 'dummy-section');
 
         $expectedResponse = [

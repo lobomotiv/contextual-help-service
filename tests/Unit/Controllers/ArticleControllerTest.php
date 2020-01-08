@@ -12,7 +12,8 @@ class ArticleControllerTest extends TestCase
      */
     public function index_calledWithId_returnsDummyArticle()
     {
-        $controller = new ArticleController();
+        $purifier = app(\HTMLPurifier::class);
+        $controller = new ArticleController($purifier);
         $response = $controller->index(123);
 
         $expectedResponse = [
