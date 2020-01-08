@@ -38,16 +38,17 @@ class ZendeskClientTest extends TestCase
      */
     public function getArticle_givenExistingId_returnsArticleData(): void
     {
-        $expectedResult = [
+        $responseData = [
             'article' => [
                 'html_url' => 'https://help.emarsys.com/hc/en-us/articles/115004581365-Overview-Transactional-opt-in',
                 'title' => 'Overview:: Transactional opt-in',
                 'body' => '<h1>Test body</h1>'
             ]
         ];
+        $expectedResult = $responseData['article'];
 
         $mockResponses = new MockHandler([
-            new Response(200, [], json_encode($expectedResult)),
+            new Response(200, [], json_encode($responseData)),
         ]);
         $guzzleClient = $this->createClientWithMockResponses($mockResponses);
 
