@@ -17,7 +17,13 @@ $router->get('/', static function () use ($router) {
 });
 
 $router->get('/healthcheck', 'HealthCheckController@index');
+
 $router->get('/article/{id:[0-9]+}', [
     'middleware' => ['jwt.auth'],
     'uses' => 'ArticleController@index',
+]);
+
+$router->get('/article/{articleId:[0-9]+}/section/{sectionName}', [
+    'middleware' => ['jwt.auth'],
+    'uses' => 'SectionController@index',
 ]);
