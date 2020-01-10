@@ -16,7 +16,7 @@ class ZendeskArticleIdMapper
         $this->map = config('zendesk.map');
     }
 
-    public function getZendeskId(string $suiteStringId)
+    public function getZendeskId(string $suiteStringId): int
     {
         $this->validateSuiteStringId($suiteStringId);
 
