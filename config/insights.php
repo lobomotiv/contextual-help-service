@@ -76,7 +76,6 @@ return [
 
     'remove' => [
         AlphabeticallySortedUsesSniff::class,
-        DeclareStrictTypesSniff::class,
         DisallowMixedTypeHintSniff::class,
         ForbiddenDefineFunctions::class,
         ForbiddenNormalClasses::class,
@@ -97,11 +96,6 @@ return [
         UnusedParameterSniff::class => [
             'exclude' => [
                 'app/Console/Kernel.php',
-            ],
-        ],
-        StaticClosureSniff::class => [
-            'exclude' => [
-                'app/Providers/AuthServiceProvider.php',
             ],
         ],
         LineLengthSniff::class => [
