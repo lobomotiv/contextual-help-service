@@ -99,6 +99,7 @@ if (class_exists(InsightsServiceProvider::class)) {
 $app->configure('cors');
 $app->configure('insights');
 $app->configure('logging');
+$app->configure('zendesk');
 
 /*
 |--------------------------------------------------------------------------

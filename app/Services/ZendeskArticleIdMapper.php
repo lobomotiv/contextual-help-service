@@ -16,21 +16,21 @@ class ZendeskArticleIdMapper
         $this->map = config('zendesk.map');
     }
 
-    public function getZendeskId(string $suiteStringId): int
+    public function getZendeskId(string $stringId): int
     {
-        $this->validateSuiteStringId($suiteStringId);
+        $this->validateStringId($stringId);
 
-        return $this->map[$suiteStringId];
+        return $this->map[$stringId];
     }
 
-    private function validateSuiteStringId(string $suiteStringId): void
+    private function validateStringId(string $stringId): void
     {
-        if ($suiteStringId === '') {
+        if ($stringId === '') {
             throw new NotFoundArticle('Article id must be a non empty string');
         }
 
-        if (!array_key_exists($suiteStringId, $this->map)) {
-            throw new NotFoundArticle(printf('Article with id %s does not found', $suiteStringId));
+        if (!array_key_exists($stringId, $this->map)) {
+            throw new NotFoundArticle(sprintf('Article with id %s does not found', $stringId));
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Test\Unit\Controller;
 
+use Illuminate\Http\Response;
 use Psr\Log\LogLevel;
 use Test\TestCase;
 
@@ -14,7 +15,7 @@ class HealthCheckControllerTest extends TestCase
     {
         $this->get('/healthcheck');
 
-        $this->assertResponseStatus(200);
+        $this->assertResponseStatus(Response::HTTP_OK);
         $this->seeJson(['success' => true]);
     }
 
