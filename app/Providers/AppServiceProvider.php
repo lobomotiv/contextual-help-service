@@ -15,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(\HTMLPurifier::class, static function () {
             $config = \HTMLPurifier_Config::createDefault();
+            $config->set('Attr.EnableID', true);
 
             return new \HTMLPurifier($config);
         });

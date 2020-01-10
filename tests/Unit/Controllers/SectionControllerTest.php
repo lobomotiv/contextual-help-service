@@ -90,7 +90,7 @@ class SectionControllerTest extends TestCase
         $response = $this->controller->index(self::ARTICLE_ID, 'section_test');
 
         $expectedResponse = [
-            'body' => '<div><h1>Test Section Content</h1></div>'
+            'body' => '<div id="section_test"><h1>Test Section Content</h1></div>'
         ];
 
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
@@ -124,7 +124,7 @@ class SectionControllerTest extends TestCase
         $response = $this->controller->index(self::STRING_ID, 'section_test');
 
         $expectedResponse = [
-            'body' => '<div><h1>Test Section Content</h1></div>'
+            'body' => '<div id="section_test"><h1>Test Section Content</h1></div>'
         ];
 
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
