@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
+        "bepsvpt/secure-headers": "^5.5",
         "ezyang/htmlpurifier": "^4.12",
         "guzzlehttp/guzzle": "^6.5",
         "laravel/lumen-framework": "^6.0",

@@ -1,5 +1,7 @@
 <?php
 
+use Bepsvpt\SecureHeaders\SecureHeadersServiceProvider;
+use Middleware\Auth\Jwt\Providers\LumenServiceProvider;
 use Nord\Lumen\Cors\CorsMiddleware;
 use Nord\Lumen\Cors\CorsServiceProvider;
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider;
@@ -84,7 +86,8 @@ $app->singleton(
 // $app->register(App\Providers\AuthServiceProvider::class);
 
 $app->register(CorsServiceProvider::class);
-$app->register(\Middleware\Auth\Jwt\Providers\LumenServiceProvider::class);
+$app->register(LumenServiceProvider::class);
+$app->register(SecureHeadersServiceProvider::class);
 
 if (class_exists(InsightsServiceProvider::class)) {
     $app->register(InsightsServiceProvider::class);
