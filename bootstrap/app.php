@@ -113,8 +113,15 @@ $app->configure('zendesk');
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
+    'middleware' => ['jwt.auth'],
 ], function ($router) {
-    require __DIR__.'/../routes/web.php';
+    require __DIR__ . '/../routes/api.php';
+});
+
+$app->router->group([
+    'namespace' => 'App\Http\Controllers',
+], function ($router) {
+    require __DIR__ . '/../routes/healthcheck.php';
 });
 
 return $app;
