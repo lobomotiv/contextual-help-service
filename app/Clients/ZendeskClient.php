@@ -28,7 +28,7 @@ class ZendeskClient
             throw new NotFoundArticle("Article not found with given id: ${articleId}");
         }
 
-        $responseData = json_decode($response->getBody(), true);
+        $responseData = json_decode($response->getBody()->getContents(), true);
 
         return $responseData['article'];
     }
