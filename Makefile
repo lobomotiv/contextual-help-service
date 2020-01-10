@@ -9,6 +9,9 @@ help: ## This help message
 install: ## Build images
 	@$(MAKE) setup-local-env
 	@docker-compose build
+	@$(MAKE) composer-install
+
+composer-install: ## Composer install in docker
 	@$(run_docker) composer install
 
 update: ## Update dependencies
