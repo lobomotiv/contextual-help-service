@@ -12,6 +12,7 @@ class RatingTest extends TestCase
     private const ARTICLE_ID = 1;
     private const CUSTOMER_ID = 2;
     private const ADMIN_ID = 3;
+    private const NOT_EXISTING_ARTICLE_ID = 849;
 
     /**
      * @var Rating
@@ -61,6 +62,32 @@ class RatingTest extends TestCase
             ->with('set', ["${articleId}.${customerId}.${adminId}", 'down']);
 
         $this->rating->downVote($articleId, $customerId, $adminId);
+    }
+
+    /**
+     * @test
+     */
+    public function deleteVote_givenNotExistingArticleIdAndCustomerIdAndAdminId_throwsNotFoundException()
+    {
+        $notExistingArticleId = self::NOT_EXISTING_ARTICLE_ID;
+        $customerId = self::CUSTOMER_ID;
+        $adminId = self::ADMIN_ID;
+
+        $this->redisManager
+            ->expects($this->once())
+            ->method('__call')
+            ->with('delete', ["${notExistingArticleId}.${customerId}.${adminId}"])
+            ->willReturn(0);
+
+        $this->expectException(RatingNotFound::class);
+        $this->expectExceptionMessage(sprintf(
+            'Rating not found for given key: %d.%d.%d',
+            $notExistingArticleId,
+            $customerId,
+            $adminId
+        ));
+
+        $this->rating->deleteVote($notExistingArticleId, $customerId, $adminId);
     }
 
     /**
