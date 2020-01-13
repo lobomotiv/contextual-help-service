@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Illuminate\Redis\RedisManager;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use Illuminate\Support\ServiceProvider;
@@ -28,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
                 return new HTMLPurifier($config);
             }
         );
+
+        $this->app->alias('redis', RedisManager::class);
     }
 
     public function boot(LoggerInterface $logger)

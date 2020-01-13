@@ -1,6 +1,7 @@
 <?php
 
 use Bepsvpt\SecureHeaders\SecureHeadersServiceProvider;
+use Illuminate\Redis\RedisServiceProvider;
 use Middleware\Auth\Jwt\Providers\LumenServiceProvider;
 use Nord\Lumen\Cors\CorsMiddleware;
 use Nord\Lumen\Cors\CorsServiceProvider;
@@ -82,6 +83,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(CorsServiceProvider::class);
 $app->register(LumenServiceProvider::class);
+$app->register(RedisServiceProvider::class);
 $app->register(SecureHeadersServiceProvider::class);
 
 if (class_exists(InsightsServiceProvider::class)) {
@@ -92,6 +94,7 @@ if (class_exists(InsightsServiceProvider::class)) {
  * Load configurations
  */
 $app->configure('cors');
+$app->configure('database');
 $app->configure('insights');
 $app->configure('logging');
 $app->configure('zendesk');

@@ -8,3 +8,9 @@ services:
       - ".:/var/www/html/"
     environment:
       - APP_ENV=development
+
+  redis:
+    image: redis:5.0.7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass password
