@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use Illuminate\Redis\RedisManager;
 use HTMLPurifier;
 use HTMLPurifier_Config;
+use Illuminate\Redis\RedisManager;
 use Illuminate\Support\ServiceProvider;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
