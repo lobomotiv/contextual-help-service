@@ -13,3 +13,8 @@ $router->get('/article/{articleId}/section/{sectionName}', [
     'middleware' => ['jwt.auth'],
     'uses' => 'SectionController@index',
 ]);
+
+$router->delete('/article/{articleId}/rate', [
+    'middleware' => ['jwt.auth'],
+    'uses' => 'RatingController@delete',
+]);
