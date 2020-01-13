@@ -28,7 +28,7 @@ class Rating
 
     public function deleteVote(int $articleId, int $customerId, int $adminId): void
     {
-        $deletedKeysCount = $this->redisManager->delete("${articleId}.${customerId}.${adminId}");
+        $deletedKeysCount = $this->redisManager->del("${articleId}.${customerId}.${adminId}");
 
         if ($deletedKeysCount === 0) {
             throw new RatingNotFound(sprintf(

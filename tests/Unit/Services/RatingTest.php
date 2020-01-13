@@ -76,7 +76,7 @@ class RatingTest extends TestCase
         $this->redisManager
             ->expects($this->once())
             ->method('__call')
-            ->with('delete', ["${notExistingArticleId}.${customerId}.${adminId}"])
+            ->with('del', ["${notExistingArticleId}.${customerId}.${adminId}"])
             ->willReturn(0);
 
         $this->expectException(RatingNotFound::class);
@@ -102,7 +102,7 @@ class RatingTest extends TestCase
         $this->redisManager
             ->expects($this->once())
             ->method('__call')
-            ->with('delete', ["${articleId}.${customerId}.${adminId}"]);
+            ->with('del', ["${articleId}.${customerId}.${adminId}"]);
 
         $this->rating->deleteVote($articleId, $customerId, $adminId);
     }
