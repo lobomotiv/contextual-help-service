@@ -5,7 +5,7 @@ namespace Test\Unit\Controller;
 use App\Clients\ZendeskClient;
 use App\Exceptions\NotFoundArticle;
 use App\Http\Controllers\SectionController;
-use App\Services\ZendeskArticleIdMapper;
+use App\Services\ZendeskMapper;
 use HTMLPurifier;
 use Illuminate\Http\Response;
 use Symfony\Component\DomCrawler\Crawler;
@@ -28,7 +28,7 @@ class SectionControllerTest extends TestCase
         $purifier = $this->app->get(HTMLPurifier::class);
         $this->zendeskClientMock = $this->createMock(ZendeskClient::class);
         $crawler = $this->app->get(Crawler::class);
-        $this->mapperMock = $this->createMock(ZendeskArticleIdMapper::class);
+        $this->mapperMock = $this->createMock(ZendeskMapper::class);
 
         $this->controller = new SectionController($purifier, $this->zendeskClientMock, $crawler, $this->mapperMock);
     }
@@ -111,7 +111,7 @@ class SectionControllerTest extends TestCase
 
         $this->mapperMock
             ->expects($this->once())
-            ->method('getZendeskId')
+            ->method('getZendeskArticleId')
             ->with(self::STRING_ID)
             ->willReturn(self::ARTICLE_ID);
 

@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Clients\ZendeskClient;
 use App\Exceptions\NotFoundArticle;
-use App\Services\ZendeskArticleIdMapper;
+use App\Services\ZendeskMapper;
 use HTMLPurifier;
 use Illuminate\Http\JsonResponse;
 
@@ -16,7 +16,7 @@ class ArticleController extends Controller
     private $client;
     private $mapper;
 
-    public function __construct(HTMLPurifier $purifier, ZendeskClient $client, ZendeskArticleIdMapper $mapper)
+    public function __construct(HTMLPurifier $purifier, ZendeskClient $client, ZendeskMapper $mapper)
     {
         $this->purifier = $purifier;
         $this->client = $client;
@@ -42,7 +42,7 @@ class ArticleController extends Controller
     private function getArticleId($id): int
     {
         if (!is_numeric($id)) {
-            return $this->mapper->getZendeskId($id);
+            return $this->mapper->getZendeskArticleId($id);
         }
 
         return (int) $id;

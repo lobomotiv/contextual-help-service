@@ -5,7 +5,7 @@ namespace Test\Unit\Controller;
 use App\Clients\ZendeskClient;
 use App\Exceptions\NotFoundArticle;
 use App\Http\Controllers\ArticleController;
-use App\Services\ZendeskArticleIdMapper;
+use App\Services\ZendeskMapper;
 use HTMLPurifier;
 use Illuminate\Http\Response;
 use Test\TestCase;
@@ -30,7 +30,7 @@ class ArticleControllerTest extends TestCase
             ->with(self::NOT_EXISTING_ARTICLE_ID)
             ->willThrowException(new NotFoundArticle());
 
-        $mapper = $this->createMock(ZendeskArticleIdMapper::class);
+        $mapper = $this->createMock(ZendeskMapper::class);
 
         $controller = new ArticleController($purifier, $zendeskClientMock, $mapper);
         $response = $controller->index(self::NOT_EXISTING_ARTICLE_ID);
@@ -62,7 +62,7 @@ class ArticleControllerTest extends TestCase
             ->with(self::ARTICLE_ID)
             ->willReturn($article);
 
-        $mapper = $this->createMock(ZendeskArticleIdMapper::class);
+        $mapper = $this->createMock(ZendeskMapper::class);
 
         $controller = new ArticleController($purifier, $zendeskClientMock, $mapper);
 
@@ -89,10 +89,10 @@ class ArticleControllerTest extends TestCase
         ];
         $purifier = $this->app->get(HTMLPurifier::class);
 
-        $mapper = $this->createMock(ZendeskArticleIdMapper::class);
+        $mapper = $this->createMock(ZendeskMapper::class);
         $mapper
             ->expects($this->once())
-            ->method('getZendeskId')
+            ->method('getZendeskArticleId')
             ->with(self::STRING_ID)
             ->willReturn(self::ARTICLE_ID);
 

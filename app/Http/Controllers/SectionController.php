@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Clients\ZendeskClient;
 use App\Exceptions\NotFoundArticle;
-use App\Services\ZendeskArticleIdMapper;
+use App\Services\ZendeskMapper;
 use HTMLPurifier;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\DomCrawler\Crawler;
@@ -26,7 +26,7 @@ class SectionController extends Controller
      */
     private $crawler;
     /**
-     * @var ZendeskArticleIdMapper
+     * @var ZendeskMapper
      */
     private $mapper;
 
@@ -34,7 +34,7 @@ class SectionController extends Controller
         HTMLPurifier $purifier,
         ZendeskClient $zendeskClient,
         Crawler $crawler,
-        ZendeskArticleIdMapper $mapper)
+        ZendeskMapper $mapper)
     {
         $this->purifier = $purifier;
         $this->zendeskClient = $zendeskClient;
@@ -68,7 +68,7 @@ class SectionController extends Controller
     private function getArticleId($id): int
     {
         if (!is_numeric($id)) {
-            return $this->mapper->getZendeskId($id);
+            return $this->mapper->getZendeskArticleId($id);
         }
 
         return (int) $id;

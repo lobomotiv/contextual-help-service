@@ -6,7 +6,7 @@ namespace App\Services;
 
 use App\Exceptions\NotFoundArticle;
 
-class ZendeskArticleIdMapper
+class ZendeskMapper
 {
     /**
      * @var array
@@ -18,20 +18,20 @@ class ZendeskArticleIdMapper
         $this->map = config('zendesk.map');
     }
 
-    public function getZendeskId(string $stringId): int
+    public function getZendeskArticleId(string $stringId): int
     {
-        $this->validateStringId($stringId);
+        $this->validateArticleId($stringId);
 
-        return $this->map[$stringId];
+        return $this->map[$stringId]['articleId'];
     }
 
-    private function validateStringId(string $stringId): void
+    private function validateArticleId(string $stringId): void
     {
         if ($stringId === '') {
             throw new NotFoundArticle('Article id must be a non empty string');
         }
 
-        if (!array_key_exists($stringId, $this->map)) {
+        if (!array_key_exists($stringId, $this->map) || !array_key_exists('articleId', $this->map[$stringId])) {
             throw new NotFoundArticle(sprintf('Article with id %s does not found', $stringId));
         }
     }
