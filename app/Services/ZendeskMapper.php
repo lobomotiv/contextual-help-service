@@ -51,7 +51,10 @@ class ZendeskMapper
             throw new NotFoundSection('Section id must be a non empty string');
         }
 
-        if (!array_key_exists('sections', $this->map[$articleId]) || !array_key_exists($sectionName, $this->map[$articleId]['sections'])) {
+        $mapHasSection = array_key_exists('sections', $this->map[$articleId]);
+        $mapHasSectionMap = array_key_exists($sectionName, $this->map[$articleId]['sections']);
+
+        if (!$mapHasSection || !$mapHasSectionMap) {
             throw new NotFoundSection(sprintf('Section with id %s does not found', $sectionName));
         }
     }
