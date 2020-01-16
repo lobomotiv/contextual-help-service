@@ -66,7 +66,14 @@ class SectionControllerTest extends TestCase
             ->with(self::ARTICLE_ID)
             ->willReturn($article);
 
-        $response = $this->controller->index(self::ARTICLE_ID, 'not_exists_section');
+        $notExistingSectionId = 'not_exists_section';
+        $this->mapperMock
+            ->expects($this->once())
+            ->method('getZendeskSectionId')
+            ->with(self::ARTICLE_ID, $notExistingSectionId)
+            ->willThrowException(new NotFoundSection());
+
+        $response = $this->controller->index(self::ARTICLE_ID, $notExistingSectionId);
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
     }
