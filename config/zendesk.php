@@ -6,6 +6,7 @@ return [
         'industry_tactics' => 360016171414,
         'loyalsys' => 360031548653,
         'main_dashboard' => 115004432305,
+        'dashboard_main' => 115004432305,
         'si_customer_lifecycle' => 115004676289,
         'si_product_affinity' => 115004696129,
         'si_impact' => 115004696529,
