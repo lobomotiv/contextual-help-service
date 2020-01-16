@@ -63,4 +63,9 @@ return [
         'data_sources' => 115003067885,
         'enhance' => 115004325673
     ],
+    'sectionMap' => [
+        115002923749 => [
+            'advancedScheduling' => 'advanced_scheduling',
+        ]
+    ],
 ];
