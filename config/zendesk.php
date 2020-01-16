@@ -61,7 +61,8 @@ return [
         'si_data_quality' => 115004696309,
         'link_categories' => 115004630325,
         'data_sources' => 115003067885,
-        'enhance' => 115004325673
+        'enhance' => 115004325673,
+        'send_time_optimization' => 115004432089,
     ],
     'sectionMap' => [
         115002923749 => [
