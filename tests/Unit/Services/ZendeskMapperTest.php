@@ -25,14 +25,14 @@ class ZendeskMapperTest extends TestCase
     {
         parent::setUp();
 
-        config()->set('zendesk.map', [
-            self::TEST_SUITE_STRING_ID => [
-                'articleId' => self::TEST_ZENDESK_ID,
-                'sections' => [
-                    self::TEST_SUITE_SECTION_NAME => self::TEST_SECTION_ID
-                ],
-            ],
-            self::TEST_SUITE_INVALID_STRING_ID => []
+        config()->set('zendesk.articleMap', [
+            self::TEST_SUITE_STRING_ID => self::TEST_ZENDESK_ID,
+        ]);
+
+        config()->set('zendesk.sectionMap', [
+            self::TEST_ZENDESK_ID => [
+                self::TEST_SUITE_SECTION_NAME => self::TEST_SECTION_ID,
+            ]
         ]);
         $this->mapper = new ZendeskMapper();
     }
@@ -80,21 +80,11 @@ class ZendeskMapperTest extends TestCase
     /**
      * @test
      */
-    public function getZendeskSectionId_calledWithEmptyArticleIdAndEmptySectionName_throwsNotFoundArticleException()
-    {
-        $this->expectException(NotFoundArticle::class);
-
-        $this->mapper->getZendeskSectionId('', '');
-    }
-
-    /**
-     * @test
-     */
     public function getZendeskSectionId_calledWithArticleIdAndEmptySectionName_throwsNotFoundSectionException()
     {
         $this->expectException(NotFoundSection::class);
 
-        $this->mapper->getZendeskSectionId(self::TEST_SUITE_STRING_ID, '');
+        $this->mapper->getZendeskSectionId(self::TEST_ZENDESK_ID, '');
     }
 
     /**
@@ -104,7 +94,7 @@ class ZendeskMapperTest extends TestCase
     {
         $this->expectException(NotFoundSection::class);
 
-        $this->mapper->getZendeskSectionId(self::TEST_SUITE_STRING_ID, 'someSectionName');
+        $this->mapper->getZendeskSectionId(self::TEST_ZENDESK_ID, 'someSectionName');
     }
 
     /**
@@ -112,7 +102,7 @@ class ZendeskMapperTest extends TestCase
      */
     public function getZendeskSectionId_calledWithArticleIdAndSectionName_returnsSectionId()
     {
-        $sectionId = $this->mapper->getZendeskSectionId(self::TEST_SUITE_STRING_ID, self::TEST_SUITE_SECTION_NAME);
+        $sectionId = $this->mapper->getZendeskSectionId(self::TEST_ZENDESK_ID, self::TEST_SUITE_SECTION_NAME);
 
         $this->assertEquals(self::TEST_SECTION_ID, $sectionId);
     }

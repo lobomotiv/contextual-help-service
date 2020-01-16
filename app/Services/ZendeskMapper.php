@@ -12,25 +12,31 @@ class ZendeskMapper
     /**
      * @var array
      */
-    private $map;
+    private $articleMap;
+
+    /**
+     * @var array
+     */
+    private $sectionMap;
 
     public function __construct()
     {
-        $this->map = config('zendesk.map');
+        $this->articleMap = config('zendesk.articleMap');
+        $this->sectionMap = config('zendesk.sectionMap');
     }
 
     public function getZendeskArticleId(string $stringId): int
     {
         $this->validateArticleId($stringId);
 
-        return $this->map[$stringId]['articleId'];
+        return $this->articleMap[$stringId];
     }
 
-    public function getZendeskSectionId(string $articleId, string $sectionName)
+    public function getZendeskSectionId(int $articleId, string $sectionName)
     {
-        $this->validateArticleIdAndSectionName($articleId, $sectionName);
+        $this->validateSectionName($articleId, $sectionName);
 
-        return $this->map[$articleId]['sections'][$sectionName];
+        return $this->sectionMap[$articleId][$sectionName];
     }
 
     private function validateArticleId(string $stringId): void
@@ -39,22 +45,20 @@ class ZendeskMapper
             throw new NotFoundArticle('Article id must be a non empty string');
         }
 
-        if (!array_key_exists($stringId, $this->map) || !array_key_exists('articleId', $this->map[$stringId])) {
+        if (!array_key_exists($stringId, $this->articleMap)) {
             throw new NotFoundArticle(sprintf('Article with id %s does not found', $stringId));
         }
     }
-    private function validateArticleIdAndSectionName(string $articleId, string $sectionName): void
+    private function validateSectionName(int $articleId, string $sectionName): void
     {
-        $this->validateArticleId($articleId);
-
         if ($sectionName === '') {
             throw new NotFoundSection('Section id must be a non empty string');
         }
 
-        $mapHasSection = array_key_exists('sections', $this->map[$articleId]);
-        $mapHasSectionMap = array_key_exists($sectionName, $this->map[$articleId]['sections']);
+        $sectionMapHasArticle = array_key_exists($articleId, $this->sectionMap);
+        $sectionMapArticleHasSection = array_key_exists($sectionName, $this->sectionMap[$articleId]);
 
-        if (!$mapHasSection || !$mapHasSectionMap) {
+        if (!$sectionMapHasArticle || !$sectionMapArticleHasSection) {
             throw new NotFoundSection(sprintf('Section with id %s does not found', $sectionName));
         }
     }

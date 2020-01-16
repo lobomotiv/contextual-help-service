@@ -1,9 +1,7 @@
 <?php
 
 return [
-    'map' => [
-        'email_campaigns' => [
-            'articleId' => 115002923749,
-        ],
+    'articleMap' => [
+        'email_campaigns' => 115002923749,
     ],
 ];
