@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Clients\ZendeskClient;
 use App\Exceptions\NotFoundArticle;
+use App\Exceptions\NotFoundSection;
 use App\Services\ZendeskMapper;
 use HTMLPurifier;
 use Illuminate\Http\JsonResponse;
@@ -51,6 +52,8 @@ class SectionController extends Controller
             return new JsonResponse(null, 404);
         }
 
+        $sectionName = $this->getSectionNameFromMap($sectionName, $zendeskArticleId);
+
         $this->crawler->addHtmlContent($article['body']);
         $sectionCrawler = $this->crawler->filterXPath(sprintf('//div[@id="%s"]', $sectionName));
 
@@ -72,5 +75,15 @@ class SectionController extends Controller
         }
 
         return (int) $id;
+    }
+
+    private function getSectionNameFromMap(string $sectionName, int $zendeskArticleId): string
+    {
+        try {
+            $sectionName = $this->mapper->getZendeskSectionId($zendeskArticleId, $sectionName);
+        } catch (NotFoundSection $exception) {
+
+        }
+        return $sectionName;
     }
 }

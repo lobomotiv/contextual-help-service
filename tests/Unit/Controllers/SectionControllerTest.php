@@ -4,6 +4,7 @@ namespace Test\Unit\Controller;
 
 use App\Clients\ZendeskClient;
 use App\Exceptions\NotFoundArticle;
+use App\Exceptions\NotFoundSection;
 use App\Http\Controllers\SectionController;
 use App\Services\ZendeskMapper;
 use HTMLPurifier;
@@ -75,8 +76,9 @@ class SectionControllerTest extends TestCase
      */
     public function index_calledWithExistingArticleIdAndSectionName_returnsArticleBody(): void
     {
+        $sectionId = 'section_test';
         $article = [
-            'body' => '<span><h1>Body</h1><div id="section_test"><script>alert("hello")</script><h1>Test Section Content</h1></div></span>',
+            'body' => '<span><h1>Body</h1><div id="'. $sectionId .'"><script>alert("hello")</script><h1>Test Section Content</h1></div></span>',
             'html_url' => 'http://example.com/',
             'title' => 'Dummy Response',
         ];
@@ -87,10 +89,52 @@ class SectionControllerTest extends TestCase
             ->with(self::ARTICLE_ID)
             ->willReturn($article);
 
-        $response = $this->controller->index(self::ARTICLE_ID, 'section_test');
+        $this->mapperMock
+            ->expects($this->once())
+            ->method('getZendeskSectionId')
+            ->with(self::ARTICLE_ID, $sectionId)
+            ->willThrowException(new NotFoundSection());
+
+        $response = $this->controller->index(self::ARTICLE_ID, $sectionId);
 
         $expectedResponse = [
-            'body' => '<div id="section_test"><h1>Test Section Content</h1></div>'
+            'body' => '<div id="'. $sectionId .'"><h1>Test Section Content</h1></div>'
+        ];
+
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertEquals($expectedResponse, $response->getData(true));
+    }
+
+    /**
+     * @test
+     */
+    public function index_calledWithExistingArticleIdAndSectionNameInMap_returnsArticleBody(): void
+    {
+        $sectionName = 'sectionTest';
+        $sectionId = 'section_test';
+
+        $article = [
+            'body' => '<span><h1>Body</h1><div id="'. $sectionId .'"><script>alert("hello")</script><h1>Test Section Content</h1></div></span>',
+            'html_url' => 'http://example.com/',
+            'title' => 'Dummy Response',
+        ];
+
+        $this->zendeskClientMock
+            ->expects($this->once())
+            ->method('getArticleById')
+            ->with(self::ARTICLE_ID)
+            ->willReturn($article);
+
+        $this->mapperMock
+            ->expects($this->once())
+            ->method('getZendeskSectionId')
+            ->with(self::ARTICLE_ID, $sectionName)
+            ->willReturn($sectionId);
+
+        $response = $this->controller->index(self::ARTICLE_ID, $sectionName);
+
+        $expectedResponse = [
+            'body' => '<div id="'. $sectionId .'"><h1>Test Section Content</h1></div>'
         ];
 
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
@@ -103,8 +147,9 @@ class SectionControllerTest extends TestCase
      */
     public function index_calledWithStringIdAndSectionName_callsZendeskWithArticleIdFromMap(): void
     {
+        $sectionId = 'section_test';
         $article = [
-            'body' => '<span><h1>Body</h1><div id="section_test"><script>alert("hello")</script><h1>Test Section Content</h1></div></span>',
+            'body' => '<span><h1>Body</h1><div id="'. $sectionId .'"><script>alert("hello")</script><h1>Test Section Content</h1></div></span>',
             'html_url' => 'http://example.com/',
             'title' => 'Dummy Response',
         ];
@@ -115,16 +160,22 @@ class SectionControllerTest extends TestCase
             ->with(self::STRING_ID)
             ->willReturn(self::ARTICLE_ID);
 
+        $this->mapperMock
+            ->expects($this->once())
+            ->method('getZendeskSectionId')
+            ->with(self::ARTICLE_ID, $sectionId)
+            ->willThrowException(new NotFoundSection());
+
         $this->zendeskClientMock
             ->expects($this->once())
             ->method('getArticleById')
             ->with(self::ARTICLE_ID)
             ->willReturn($article);
 
-        $response = $this->controller->index(self::STRING_ID, 'section_test');
+        $response = $this->controller->index(self::STRING_ID, $sectionId);
 
         $expectedResponse = [
-            'body' => '<div id="section_test"><h1>Test Section Content</h1></div>'
+            'body' => '<div id="'. $sectionId .'"><h1>Test Section Content</h1></div>'
         ];
 
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());

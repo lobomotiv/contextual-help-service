@@ -3,6 +3,7 @@
 namespace Test\Integration;
 
 use App\Clients\ZendeskClient;
+use App\Services\ZendeskMapper;
 use Illuminate\Http\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use Test\Helpers\JwtAuth;
@@ -17,11 +18,19 @@ class SectionControllerTest extends TestCase
      */
     private $zendeskClientMock;
 
+    /**
+     * @var ZendeskClient|MockObject
+     */
+    private $zendeskMapperMock;
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->zendeskClientMock = $this->createMock(ZendeskClient::class);
+        $this->zendeskMapperMock = $this->createMock(ZendeskMapper::class);
+
         $this->app->instance(ZendeskClient::class, $this->zendeskClientMock);
+        $this->app->instance(ZendeskMapper::class, $this->zendeskMapperMock);
     }
 
     /**
@@ -47,6 +56,9 @@ class SectionControllerTest extends TestCase
      */
     public function index_calledWithRequiredGetParams_returns200(): void
     {
+        $articleId = 123;
+        $sectionId = 'test-section-name';
+
         $this->zendeskClientMock
             ->expects($this->once())
             ->method('getArticleById')
@@ -56,7 +68,13 @@ class SectionControllerTest extends TestCase
                 'title' => 'Dummy Response',
             ]);
 
-        $this->get('article/123/section/test-section-name', $this->generateValidJwtHeader());
+        $this->zendeskMapperMock
+            ->expects($this->once())
+            ->method('getZendeskSectionId')
+            ->with($articleId, $sectionId)
+            ->willReturn($sectionId);
+
+        $this->get('article/'. $articleId .'/section/' . $sectionId, $this->generateValidJwtHeader());
         $this->assertResponseStatus(Response::HTTP_OK);
     }
 }
