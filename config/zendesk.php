@@ -64,10 +64,4 @@ return [
         'enhance' => 115004325673,
         'send_time_optimization' => 115004432089,
     ],
-    'sectionMap' => [
-        115002923749 => [
-            'simpleScheduling' => 'simple-scheduling',
-            'advancedScheduling' => 'advanced_scheduling',
-        ]
-    ],
 ];
