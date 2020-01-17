@@ -82,7 +82,6 @@ class SectionController extends Controller
         try {
             $sectionName = $this->mapper->getZendeskSectionId($zendeskArticleId, $sectionName);
         } catch (NotFoundSection $exception) {
-
         }
         return $sectionName;
     }
