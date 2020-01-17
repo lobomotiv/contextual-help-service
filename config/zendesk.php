@@ -66,6 +66,7 @@ return [
     ],
     'sectionMap' => [
         115002923749 => [
+            'simpleScheduling' => 'simple-scheduling',
             'advancedScheduling' => 'advanced_scheduling',
         ]
     ],
