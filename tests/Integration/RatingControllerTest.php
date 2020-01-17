@@ -51,4 +51,36 @@ class RatingControllerTest extends TestCase
 
         $this->assertResponseStatus(Response::HTTP_OK);
     }
+
+    /**
+     * @test
+     */
+    public function get_calledWithoutJwtAuth_returns401(): void
+    {
+        $this->get('article/123/rate');
+        $this->assertResponseStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * @test
+     */
+    public function get_calledWithInvalidJwtAuth_returns401(): void
+    {
+        $this->get('article/123/rate', [], $this->generateInvalidJwtHeader());
+        $this->assertResponseStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * @test
+     */
+    public function get_calledWithRequiredParams_returns200(): void
+    {
+        $this->ratingServiceMock
+            ->expects($this->once())
+            ->method('getVote');
+
+        $this->get('article/123/rate', $this->generateValidJwtHeader());
+
+        $this->assertResponseStatus(Response::HTTP_OK);
+    }
 }

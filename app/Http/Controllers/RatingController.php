@@ -33,4 +33,17 @@ class RatingController extends Controller
             return new JsonResponse(null, 404);
         }
     }
+
+    public function get(Request $request, int $articleId): JsonResponse
+    {
+        $customerId = (int) $request->get('tokenPayload')['customerId'];
+        $adminId = (int) $request->get('tokenPayload')['adminId'];
+
+        try {
+            $rating = $this->rating->getVote($articleId, $customerId, $adminId);
+            return new JsonResponse(['vote' => $rating], 200);
+        } catch (RatingNotFound $exception) {
+            return new JsonResponse(null, 404);
+        }
+    }
 }

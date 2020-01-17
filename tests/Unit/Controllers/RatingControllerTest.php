@@ -72,4 +72,37 @@ class RatingControllerTest extends TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
     }
+
+    /**
+     * @test
+     */
+    public function get_nonExistingArticleId_returns404(): void
+    {
+        $this->ratingServiceMock
+            ->expects($this->once())
+            ->method('getVote')
+            ->with(self::NON_EXISTING_ARTICLE_ID, self::CUSTOMER_ID, self::ADMIN_ID)
+            ->willThrowException(new RatingNotFound());
+
+        $response = $this->controller->get($this->request, self::NON_EXISTING_ARTICLE_ID);
+
+        $this->assertEquals(404, $response->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
+    public function get_existingArticleId_returns200WithRating(): void
+    {
+        $this->ratingServiceMock
+            ->expects($this->once())
+            ->method('getVote')
+            ->with(self::ARTICLE_ID, self::CUSTOMER_ID, self::ADMIN_ID)
+            ->willReturn('up');
+
+        $response = $this->controller->get($this->request, self::ARTICLE_ID);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('{"vote":"up"}', $response->getContent());
+    }
 }
