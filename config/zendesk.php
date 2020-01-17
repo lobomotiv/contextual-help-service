@@ -63,5 +63,6 @@ return [
         'data_sources' => 115003067885,
         'enhance' => 115004325673,
         'send_time_optimization' => 115004432089,
+        'delivery_advisor' => 115005004769
     ],
 ];
