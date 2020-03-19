@@ -29,18 +29,4 @@ class HealthCheckControllerTest extends TestCase
 
         $mockLogger->assertLoggedMessage(LogLevel::INFO, 'healthcheck was called');
     }
-
-    /**
-     * @test
-     */
-    public function index_RedisIsUnavailable_LogsRedisConnectionFailed(): void
-    {
-        $mockLogger = $this->mockLogger();
-        config()->set('database.redis.default.password', 'wrong_password');
-        $this->get('/healthcheck');
-
-        $mockLogger->assertLoggedMessage(LogLevel::ERROR, 'Redis is unavailable');
-        $this->assertResponseStatus(Response::HTTP_OK);
-        $this->seeJson(['success' => false, 'error' => 'Redis is unavailable']);
-    }
 }

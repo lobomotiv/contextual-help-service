@@ -10,11 +10,9 @@
         "bepsvpt/secure-headers": "^5.5",
         "ezyang/htmlpurifier": "^4.12",
         "guzzlehttp/guzzle": "^6.5",
-        "illuminate/redis": "^6.10",
         "laravel/lumen-framework": "^6.0",
         "ngabor84/laravel-jwt-auth": "^0.5.0",
         "nordsoftware/lumen-cors": "^3.2",
-        "predis/predis": "^1.1",
         "ramsey/uuid": "^3.9",
         "symfony/dom-crawler": "^5.0"
     },
