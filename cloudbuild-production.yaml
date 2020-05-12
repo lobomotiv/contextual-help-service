@@ -1,0 +1,16 @@
+steps:
+  - name: gcr.io/cloud-builders/gsutil
+    args:
+      [
+        "cp",
+        "gs://ems-deployment-configs/emartech/$REPO_NAME/$COMMIT_SHA.tar.gz",
+        "k8s-manifests.tar.gz",
+      ]
+  - name: eu.gcr.io/ems-gap-images/tar
+    args: ["xpzf", "k8s-manifests.tar.gz"]
+  - name: gcr.io/ems-gap-images/gap-deploy:latest
+    entrypoint: /builder/node.bash
+    args: ["/usr/deploy/src/index.js", "./k8s-manifests-production.yaml"]
+    env:
+      - "CLOUDSDK_CONTAINER_CLUSTER=gap-production"
+      - "CLOUDSDK_COMPUTE_ZONE=europe-west3"
