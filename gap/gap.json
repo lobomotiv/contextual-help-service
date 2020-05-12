@@ -1,0 +1,13 @@
+{
+  "appName": "contextual-help",
+  "namespace": "enterprise",
+  "buildType": "buildpack",
+  "manualConfigurationHandling": true,
+  "deployments": [
+    {
+      "name": "web",
+      "command": "vendor/bin/heroku-php-apache2 public/",
+      "ingress": true
+    }
+  ]
+}
