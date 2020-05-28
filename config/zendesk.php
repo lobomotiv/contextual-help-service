@@ -62,6 +62,12 @@ return [
         'data_sources' => 115003067885,
         'enhance' => 115004325673,
         'send_time_optimization' => 115004470785,
-        'delivery_advisor' => 115005004769
+        'delivery_advisor' => 115005004769,
+        'webchannel_accelerate_dashboard' => 360009199638,
+        'webchannel_accelerate_campaign_overview' => 360007271198,
+        'webchannel_accelerate_campaign_settings' => 360009152477,
+        'webchannel_accelerate_placement' => 360009152497,
+        'webchannel_accelerate_content' => 360009152617,
+        'webchannel_accelerate_scheduling' => 360009199658
     ],
 ];
